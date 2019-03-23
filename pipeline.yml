@@ -1,0 +1,59 @@
+---
+resources:
+  - name: pipeline
+    type: git
+    source: 
+      uri: https://github.com/droy314-examples/concourse-pipeline.git
+      branch: develop
+      private_key:|
+    -----BEGIN RSA PRIVATE KEY-----
+MIIEoAIBAAKCAQEAi6troq/KJUPHihj9xz8lX3OwOWCxr9TZn46HwehwL4/zXdX1
+xJi+BJiWjzRyh5fcsJj6eGo0m75LWf4Stg3r1e0xnKLHiWrgqnU9O9WcY5svL3Lc
+YsCBGGkuAn81nxHlUIXKi9I6jCrIacrK4IRtHy5teQsdjACJETaBWjt3hbH7Ac5B
+uP7tlLwQ24O6AwfciNrQnpYkuvvsRZidbFkkSfcYu+BjE/P65CvrmOFrw532FSe+
+8Lslr82NqJu8AQAo0THtgJY0DcUjp8TPZCTwGcomAUnre8dmKhS2ugpWPlv6JPb/
+WsUU0IVr9N7dvi+s7xTs0XAgW/+o2Tf9nEbPhQIBJQKCAQBeXxFgFelzH/WG0p2i
+TULD9DjM0qGSew+VUndnV90ZN8AcztZ96qnnbgTdTPNwX7DKWYakY2+ngJPHLyFm
+QMHxaOorkJSo9TAEeLqr41vUmUllP8VXeybLTfx+OkbTQ3Ftwi7o2iePI9OFwF+Q
+yC4OJkn31xP2z+3pCSb3x1DCHU9QawhYI3osvABqyzl4YIyYV6ot8bthr9OYmhCm
+vOTLAJp5RGW4Dy6dfoAX4HTiTW0OXoPJhoG9LlXjTnIyEgLFNtOny6rr2U9JBut0
+62IO0k5mwHug+GtQMy8ZPi7MqEypWza72f9dWxuJpHfri6FLsX81/IxE8Z3taaKt
+1NDpAoGBAMzEU/lBv2cA5iiDmu1ZNCiMCP2a/WFxR2UFVT3Pdo9jmW7drLwDMHue
+euP4mZRTso1vUVcop7n2+SdMI+VdfXsrwqMxrmNX2aREB2SvtX/qeer5lTv/6lGH
+BROq2jd4hntNmqcSinwW2Eyt6Vn883zdzf4llPXSEy8eITGeTAhfAoGBAK6df7b/
+CwT1d/w0vAb3qzXTrD2MZjMVSeewVR4CReYgUofOkPwKmIwzo+Ol5ypy6XVTIZBB
+qIK/j9LEX+XzAZ9OW5Ytm6rJgOtT0eVE1aGef2CYl8+NoJ7F9xWsY3McD5y9/k70
+xMKgJkhxAhnz/OUwnGWZZWUuIHuEragG8wKbAoGAFiMP/0VgzN2Aqm8XqvTjC01o
+wXiKGF9F/RVVUspSAannEueIS61RWXjqsNya+0dRkr/tHi3onnuQjqBylVY3FDwV
+CrlDSQKUEcIqUBL+3WV09s7fs3WcyosjJLiGSy+f1fqNQn6LgwljfelJqN0TZ3Hs
+wYeFubXYj3jg/nH6YcUCgYAOKHIjmCN88U7q74Td+GfT7pFsxjHMyl/wMOROipAL
+vW55ts18ODXh2qxsZ2XFK+lqYK+xwCJrd1DZvOUuUfk2biMaA7Ks+5TUz3HiKCz/
+RDPXZlF/iAYathrz62ICag8ai/IGZt+FZu5Y5pF3udY8GLK8ITG8GH8snA4UivEb
+4wKBgBVvm/cFUxSholSb/M3J9zKQkiM/Jm7TCyq3bwxtAAFn2MVLa68oSvSHDZHP
+FBStsWzzn01041OZGhxdL8Mmv2qAyQcoJJnITXItFFUR0PSnQYcZXK0Txngjiqli
+yuLw4q1X3Krfp3CDy+gfeZ8QhRBMemFj3QjJr7d+HnhygIx6
+-----END RSA PRIVATE KEY-----
+
+#  - name: project
+#    type: git
+#    source: 
+#      uri: ((project-url))
+#      branch: develop
+#      private_key: ((git_private_key))
+	  
+- jobs:
+    - name: pipeline-src
+    - plan:
+      - get: pipeline
+        trigger: true
+      - task: list-resources
+        config:
+          image_resource:
+            type: docker-image
+            source:
+              repository: busybox
+          inputs:
+            - name: pipeline
+          run:
+            path: ls
+            args: [pipeline/*]

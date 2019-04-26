@@ -42,8 +42,12 @@ resources:
       branch: ((project-branch))
       private_key: ((git-project-private-key))
 
+# Resource to store source to artifactory
+# Resource to store build to artifactory
+
+	  
 jobs:
-    - name: build-project
+    - name: build-branch-snapshot
     # Extract the project files
       plan:
       - get: pipeline
@@ -51,7 +55,7 @@ jobs:
         trigger: true
       - task: build-snapshot
         file: pipeline/tasks/build-snapshot.yml
-      
+    
 # Build the artifact (deploy to repository)
 # Deploy artifact to environment
 # Run integration tests

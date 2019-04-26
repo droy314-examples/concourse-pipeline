@@ -7,4 +7,4 @@ ls
 cd project
 ./gradlew --no-daemon build
 
-ls -R ./builds
+cp build/libs/*.jar builds

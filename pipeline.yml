@@ -35,27 +35,33 @@ resources:
         -----END RSA PRIVATE KEY-----
 
 
-#  - name: project
-#    type: git
-#    source: 
-#      uri: ((project-url))
-#      branch: develop
-#      private_key: ((git_private_key))
+  - name: project
+    type: git
+    source: 
+      uri: ((project-url))
+      branch: ((project-branch))
+      private_key: ((git-project-private-key))
 
 jobs:
-    - name: pipeline-src
+    - name: get-pipeline
+    # Extract the pipeline files
       plan:
       - get: pipeline
+        trigger: false
+    
+    - name: get-project
+    # Extract the project files
+      plan:
+      - get: project
         trigger: true
-      - task: list-resources
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: busybox
-          inputs:
-            - name: pipeline
-          run:
-            path: ls
-            args: [pipeline/*]
+      - get: pipeline
+        trigger: false
+      - task: build-snapshot
+        file: pipeline/tasks/build-snapshot.xml
+      
+# Build the artifact (deploy to repository)
+# Deploy artifact to environment
+# Run integration tests
+# Check quality gates
+
+    

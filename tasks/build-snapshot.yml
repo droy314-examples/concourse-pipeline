@@ -1,0 +1,17 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: openjdk
+    tag: 8-jdk
+inputs:
+  - name: project
+  - name: pipeline
+outputs:
+  - name: builds
+run:
+  path: /bin/bash
+  args:
+    - pipeline/tasks/build.sh
+ 

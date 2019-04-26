@@ -57,7 +57,7 @@ jobs:
       - get: pipeline
         trigger: false
       - task: build-snapshot
-        file: pipeline/tasks/build-snapshot.xml
+        file: pipeline/tasks/build-snapshot.yml
       
 # Build the artifact (deploy to repository)
 # Deploy artifact to environment

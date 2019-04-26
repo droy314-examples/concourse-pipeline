@@ -5,11 +5,14 @@ image_resource:
   source:
     repository: openjdk
     tag: 8-jdk
+
 inputs:
   - name: project
   - name: pipeline
+
 outputs:
   - name: builds
+
 run:
   path: /bin/bash
   args:

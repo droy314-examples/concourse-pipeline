@@ -43,19 +43,12 @@ resources:
       private_key: ((git-project-private-key))
 
 jobs:
-    - name: get-pipeline
-    # Extract the pipeline files
-      plan:
-      - get: pipeline
-        trigger: false
-    
-    - name: get-project
+    - name: build-project
     # Extract the project files
       plan:
+      - get: pipeline
       - get: project
         trigger: true
-      - get: pipeline
-        trigger: false
       - task: build-snapshot
         file: pipeline/tasks/build-snapshot.yml
       

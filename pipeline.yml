@@ -1,4 +1,12 @@
 ---
+resource_types:
+- name: artifactory
+  type: docker-image
+  source:
+    repository: pivotalservices/artifactory-resource
+
+
+
 resources:
   - name: pipeline
     type: git
@@ -41,11 +49,17 @@ resources:
       uri: ((project-url))
       branch: ((project-branch))
       private_key: ((git-project-private-key))
+  - name: publish-build
+    type: artifactory
+    source:
+        endpoint: ((artifactory-endpoint))
+        repository: ((repository))
+        regex: ((application-name))-(?<version>.*).jar
+        #username: (())
+        #password: YOUR-ARTIFACTORY-PASSWORD
+        skip_ssl_verification: true
 
-# Resource to store source to artifactory
-# Resource to store build to artifactory
-
-	  
+      
 jobs:
     - name: build-branch-snapshot
     # Extract the project files
@@ -55,7 +69,8 @@ jobs:
         trigger: true
       - task: build-snapshot
         file: pipeline/tasks/build-snapshot.yml
-    
+      - put: publish-build
+        params: { file: builds/((application-name))-*.jar }
 # Build the artifact (deploy to repository)
 # Deploy artifact to environment
 # Run integration tests

@@ -3,8 +3,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: openjdk
-    tag: 8-jdk
+    repository: gradle
+    tag: 5.2.1-jdk8
 
 inputs:
   - name: project

@@ -6,12 +6,11 @@ pwd
 echo "===== Contents of pwd ======"
 ls
 
-pushd
-
 cd project
-./gradlew --no-daemon build
+gradle --no-daemon build
 
-popd
+cd ..
+
 echo "====== Copying artifacts to output directory ====="
 cp project/build/libs/*.jar builds
 

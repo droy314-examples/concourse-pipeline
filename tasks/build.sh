@@ -2,12 +2,19 @@
 
 export TERM=${TERM:-dumb}
 pwd
+
+echo "===== Contents of pwd ======"
 ls
+
+pushd
 
 cd project
 ./gradlew --no-daemon build
 
-cp build/libs/*.jar builds
+popd
+echo "====== Copying artifacts to output directory ====="
+cp project/build/libs/*.jar builds
 
-echo "====== Preparing build output ====="
+
+echo "====== Build outputs ====="
 ls -R builds

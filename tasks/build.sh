@@ -6,7 +6,7 @@ pwd
 echo "===== Contents of pwd ======"
 ls
 
-java --version
+java -version
 
 cd project
 gradle --no-daemon build

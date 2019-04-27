@@ -15,6 +15,7 @@ outputs:
 
 run:
   path: /bin/bash
+  user: root
   args:
     - pipeline/tasks/build.sh
  

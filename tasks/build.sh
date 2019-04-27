@@ -8,3 +8,6 @@ cd project
 ./gradlew --no-daemon build
 
 cp build/libs/*.jar builds
+
+echo "====== Preparing build output ====="
+ls -R builds
